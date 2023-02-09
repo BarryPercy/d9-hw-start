@@ -1,16 +1,21 @@
 import { Row, Col, Button, ToggleButton } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { AiFillHeart } from 'react-icons/ai'
 import { FaTrash } from 'react-icons/fa'
 
 const Job = (props) => {
+  let jobs = useSelector((state) => state.favourites.jobs)
   const [favourite,setFavourite] = useState(false);
+  let isFavourite = jobs.some(job=>job._id===props.data._id)
+  
 
   useEffect(() => {
-		if(props.favourite){
-      setFavourite(true)
+		if (isFavourite){
+      setFavourite(true);
+    }else{
+      setFavourite(false);
     }
 	}, [])
   const dispatch = useDispatch()

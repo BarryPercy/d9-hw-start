@@ -998,3 +998,6 @@ node_modules/immer/src/core/immerClass.ts
 node_modules/immer/src/core/proxy.ts
 node_modules/immer/src/types/types-external.ts
 node_modules/immer/src/utils/common.ts
+node_modules/immer/src/core/immerClass.ts
+node_modules/immer/package.json
+node_modules/immer/dist/utils/common.d.ts.map
