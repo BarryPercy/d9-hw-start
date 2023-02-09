@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { Container, Row, Col, Form } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Job from './Job'
+import { Link } from "react-router-dom"
 
 const MainSearch = () => {
   const [query, setQuery] = useState('')
   const [jobs, setJobs] = useState([])
 
-  const baseEndpoint = 'https://strive-jobs-api.herokuapp.com/jobs?search='
+  const baseEndpoint ="https://strive-benchmark.herokuapp.com/api/jobs?search=" 
 
   const handleChange = (e) => {
     setQuery(e.target.value)
@@ -44,9 +45,13 @@ const MainSearch = () => {
             />
           </Form>
         </Col>
+        <Col xs={12} className="mx-auto mb-5">
+            <Link to={"/favourites"}><Button variant="info">Favourites</Button></Link>
+          
+        </Col>
         <Col xs={10} className="mx-auto mb-5">
           {jobs.map((jobData) => (
-            <Job key={jobData._id} data={jobData} />
+            <Job key={jobData._id} data={jobData} favourite={false}/>
           ))}
         </Col>
       </Row>

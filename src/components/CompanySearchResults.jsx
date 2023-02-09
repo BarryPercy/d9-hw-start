@@ -7,7 +7,7 @@ const CompanySearchResults = () => {
   const [jobs, setJobs] = useState([])
   const params = useParams()
 
-  const baseEndpoint = 'https://strive-jobs-api.herokuapp.com/jobs?company='
+  const baseEndpoint ="https://strive-benchmark.herokuapp.com/api/jobs?search=" 
 
   useEffect(() => {
     getJobs()
