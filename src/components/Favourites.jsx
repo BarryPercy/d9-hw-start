@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { Container, Col, Row, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import Job from './Job'
 
 const Favourites = () =>{
@@ -8,6 +9,11 @@ const Favourites = () =>{
     const dispatch = useDispatch()
     return(
         <Container>
+            <Row>
+            <Col>
+                <Link to={"/"}><Button variant="info">Back to Search</Button></Link>
+            </Col>
+            </Row>
             <Row>
                 <Col>
                     {favourites.map((jobData) => (

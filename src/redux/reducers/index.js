@@ -5,15 +5,13 @@ const initialState = {
   }
 
   const mainReducer = (state = initialState, action) => {
-    let jobArray = state.favourites.jobs.filter((job)=> job._id!== action.payload._id)
-    console.log("jobArray",jobArray)
     switch (action.type) {
       case 'ADD_TO_FAVOURITES':
         return {
           ...state, 
           favourites: {
             ...state.favourites,
-            jobs: [...jobArray, action.payload],
+            jobs: [...state.favourites.jobs, action.payload],
             
           },
         }

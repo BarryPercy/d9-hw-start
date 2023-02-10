@@ -35,7 +35,7 @@ const MainSearch = () => {
         <Col xs={10} className="mx-auto my-3">
           <h1>Remote Jobs Search</h1>
         </Col>
-        <Col xs={10} className="mx-auto">
+        <Col xs={9} className="mx-auto">
           <Form onSubmit={handleSubmit}>
             <Form.Control
               type="search"
@@ -45,7 +45,7 @@ const MainSearch = () => {
             />
           </Form>
         </Col>
-        <Col xs={12} className="mx-auto mb-5">
+        <Col xs={3} className="mx-auto mb-5">
             <Link to={"/favourites"}><Button variant="info">Favourites</Button></Link>
           
         </Col>

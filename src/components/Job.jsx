@@ -8,6 +8,7 @@ import { FaTrash } from 'react-icons/fa'
 const Job = (props) => {
   let jobs = useSelector((state) => state.favourites.jobs)
   const [favourite,setFavourite] = useState(false);
+  const [mounted,setMounted] = useState(false);
   let isFavourite = jobs.some(job=>job._id===props.data._id)
   
 
@@ -17,11 +18,11 @@ const Job = (props) => {
     }else{
       setFavourite(false);
     }
+    setMounted(true);
 	}, [])
   const dispatch = useDispatch()
   const toggleFavourite=()=>{
     if(favourite){
-      console.log("deleting favourite!", props.data._id)
       dispatch({
         type: 'REMOVE_FROM_FAVOURITES',
         payload: props.data._id,
@@ -50,14 +51,14 @@ const Job = (props) => {
         </a>
       </Col>
       <Col xs={3}>
-      <Button
-                  variant={favourite ? "danger": props.favourite ? "danger":"primary"}
+      {mounted&&<Button
+                  variant={favourite ? "danger": "primary"}
                   onClick={() => {
                     toggleFavourite(this)
                   }}
                 >
                   {props.favourite ? <FaTrash />:<AiFillHeart/>}
-                </Button>
+                </Button>}
       </Col>
     </Row>
   )
