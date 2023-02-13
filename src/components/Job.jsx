@@ -4,9 +4,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useState, useEffect } from 'react'
 import { AiFillHeart } from 'react-icons/ai'
 import { FaTrash } from 'react-icons/fa'
+import { addToFavourites, removeFromFavourites } from '../redux/actions'
 
 const Job = (props) => {
-  let jobs = useSelector((state) => state.favourites.jobs)
+  let jobs = useSelector((state) => state.favourites.favourites.jobs)
   const [favourite,setFavourite] = useState(false);
   const [mounted,setMounted] = useState(false);
   let isFavourite = jobs.some(job=>job._id===props.data._id)
@@ -23,16 +24,10 @@ const Job = (props) => {
   const dispatch = useDispatch()
   const toggleFavourite=()=>{
     if(favourite){
-      dispatch({
-        type: 'REMOVE_FROM_FAVOURITES',
-        payload: props.data._id,
-      })
+      dispatch(removeFromFavourites(props.data._id))
       setFavourite(false)
     }else{
-      dispatch({
-        type: 'ADD_TO_FAVOURITES',
-        payload: props.data,
-      })
+      dispatch(addToFavourites(props.data))
       setFavourite(true)
     }
   }

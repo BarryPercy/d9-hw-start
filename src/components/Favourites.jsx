@@ -1,12 +1,11 @@
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Container, Col, Row, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Job from './Job'
 
 const Favourites = () =>{
-    let favourites = useSelector((state)=>state.favourites.jobs)
+    let favourites = useSelector((state)=>state.favourites.favourites.jobs)
     console.log(favourites)
-    const dispatch = useDispatch()
     return(
         <Container>
             <Row>
