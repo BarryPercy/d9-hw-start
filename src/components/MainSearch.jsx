@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import Job from './Job'
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { getJobs } from '../redux/actions'
-import JobList from './JobList'
+import { Spinner,Alert } from 'react-bootstrap'
 
 const MainSearch = () => {
   const [query, setQuery] = useState('')
   const storeJobs = useSelector((state) => state.jobs.jobList)
   const dispatch = useDispatch()
-  const [fetched,setFetched] = useState(false)
-
+  const applicationSpinner = useSelector((state) => state.jobs.isLoading)
+  const applicationError = useSelector((state) => state.jobs.isError)
   const baseEndpoint ="https://strive-benchmark.herokuapp.com/api/jobs?search=" 
 
   const handleChange = (e) => {
@@ -22,11 +22,13 @@ const MainSearch = () => {
     e.preventDefault()
     dispatch(getJobs(baseEndpoint,query))
   }
-
   useEffect(() => {
-    console.log(storeJobs)
-  },[storeJobs]);
-
+    // now we should dispatch getBookActionAsync from here!!
+    console.log(applicationError)
+    // upon mounting of BookStore I'm starting the fetching process
+    // in the action creator, that will eventually put the fetchedBooks
+    // into the Redux Store (into state.book.stock)
+  }, [applicationError])
   return (
     <Container>
       <Row>
@@ -47,10 +49,18 @@ const MainSearch = () => {
             <Link to={"/favourites"}><Button variant="info">Favourites</Button></Link>
           
         </Col>
+        <Col xs={6}>
+          {applicationError && (
+              <Alert variant="danger" className="mr-2">
+                Uh Oh! 😨
+              </Alert>
+            )}
+        </Col>
         <Col xs={10} className="mx-auto mb-5">
-        {storeJobs!=[]&&storeJobs.map((jobData) => (
-                    <Job key={jobData._id} data={jobData}/>
-                ))}
+          {applicationSpinner && <Spinner animation="border" variant="success" />}
+          {storeJobs!=[]&&storeJobs.map((jobData) => (
+                      <Job key={jobData._id} data={jobData}/>
+                  ))}
         </Col>
       </Row>
     </Container>

@@ -1,12 +1,34 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { encryptTransform } from 'redux-persist-transform-encrypt'
 import favouritesReducer from '../reducers/favouritesReducer'
 import jobReducer from '../reducers/jobReducer'
+import localStorage from 'redux-persist/lib/storage' // default value: localStorage
+import { persistStore, persistReducer } from 'redux-persist'
 
-const store = configureStore({
-  reducer: combineReducers({
+
+const persistConfig = {
+  storage: localStorage,
+  key: 'root',
+  transforms:[
+    encryptTransform({
+      secretKey: process.env.REACT_APP_ENV_KEY,
+    }),
+  ]
+}
+const combinedReducer = combineReducers({
     jobs:jobReducer,
     favourites: favouritesReducer,
-  })
 })
+const persistedReducer = persistReducer(persistConfig, combinedReducer)
 
-export default store
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
+      serializableCheck: false,
+    })
+  },
+})
+const persistedStore = persistStore(store)
+
+export { store, persistedStore }
