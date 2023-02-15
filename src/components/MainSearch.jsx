@@ -4,10 +4,11 @@ import Job from './Job'
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { getJobs } from '../redux/actions'
-import { Spinner,Alert } from 'react-bootstrap'
+import { Spinner, Alert } from 'react-bootstrap'
 
 const MainSearch = () => {
   const [query, setQuery] = useState('')
+  const [startedSearch, setStartedSearch] = useState(false)
   const storeJobs = useSelector((state) => state.jobs.jobList)
   const dispatch = useDispatch()
   const applicationSpinner = useSelector((state) => state.jobs.isLoading)
@@ -19,16 +20,11 @@ const MainSearch = () => {
   }
 
   const handleSubmit = async (e) => {
+    setStartedSearch(true)
     e.preventDefault()
     dispatch(getJobs(baseEndpoint,query))
   }
-  useEffect(() => {
-    // now we should dispatch getBookActionAsync from here!!
-    console.log(applicationError)
-    // upon mounting of BookStore I'm starting the fetching process
-    // in the action creator, that will eventually put the fetchedBooks
-    // into the Redux Store (into state.book.stock)
-  }, [applicationError])
+
   return (
     <Container>
       <Row>
@@ -57,8 +53,8 @@ const MainSearch = () => {
             )}
         </Col>
         <Col xs={10} className="mx-auto mb-5">
-          {applicationSpinner && <Spinner animation="border" variant="success" />}
-          {storeJobs!=[]&&storeJobs.map((jobData) => (
+          {startedSearch && applicationSpinner && <Spinner animation="border" variant="success" />}
+          {storeJobs.map((jobData) => (
                       <Job key={jobData._id} data={jobData}/>
                   ))}
         </Col>

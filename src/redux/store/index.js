@@ -2,12 +2,12 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { encryptTransform } from 'redux-persist-transform-encrypt'
 import favouritesReducer from '../reducers/favouritesReducer'
 import jobReducer from '../reducers/jobReducer'
-import localStorage from 'redux-persist/lib/storage' // default value: localStorage
+import storage from 'redux-persist/lib/storage' // default value: localStorage
 import { persistStore, persistReducer } from 'redux-persist'
 
 
 const persistConfig = {
-  storage: localStorage,
+  storage: storage,
   key: 'root',
   transforms:[
     encryptTransform({
